@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Valentine Week ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-6px); }
+  80% { transform: translateX(6px); }
+  100% { transform: translateX(0); }
+}
+.shake { animation: shake 0.4s; }
+
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(120deg,#ff758c,#ff7eb3);
+  color:white;
+  text-align:center;
+  min-height:100vh;
+}
+h1{font-family:'Great Vibes',cursive;font-size:3.5rem;}
+.hidden{display:none;}
+.container{max-width:700px;margin:auto;padding:20px;}
+.card{
+  background:rgba(255,255,255,0.15);
+  backdrop-filter:blur(10px);
+  border-radius:20px;
+  padding:25px;
+  margin-top:20px;
+  animation:fadeIn 1.2s;
+}
+img{max-width:100%;border-radius:15px;margin-top:15px;}
+button{
+  padding:12px 25px;
+  border:none;
+  border-radius:25px;
+  background:white;
+  color:#ff4d6d;
+  font-size:1rem;
+  cursor:pointer;
+}
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.heart{position:fixed;animation:float 6s linear infinite;}
+@keyframes float{
+  from{transform:translateY(100vh);}
+  to{transform:translateY(-10vh);}
+}
+
+/* CLOCK */
+#clockBox{margin-top:30px;}
+#clock{
+  width:240px;
+  height:240px;
+  border-radius:50%;
+  background:radial-gradient(circle at center,#fdf8f3 60%,#e7d3b0 100%);
+  border:10px solid #8b5a2b;
+  box-shadow:0 10px 25px rgba(0,0,0,0.25), inset 0 0 8px rgba(0,0,0,0.15);
+  position:relative;
+  margin:auto;
+  cursor:pointer;
+}
+.clock-number{
+  position:absolute;
+  font-family:'Times New Roman',serif;
+  font-size:18px;
+  color:#5a3e1b;
+}
+.clock-number.xii{top:8px;left:50%;transform:translateX(-50%);}
+.clock-number.iii{right:10px;top:50%;transform:translateY(-50%);}
+.clock-number.vi{bottom:8px;left:50%;transform:translateX(-50%);}
+.clock-number.ix{left:10px;top:50%;transform:translateY(-50%);}
+.hand{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform-origin:10% 50%;
+  background:linear-gradient(to right, #3f2a14, #7a4b21);
+  border-radius:8px;
+  box-shadow:0 2px 4px rgba(0,0,0,0.35);
+}
+
+/* Hour hand – shorter & thicker */
+#hour{
+  width:32%;
+  height:7px;
+}
+
+/* Minute hand – longer & slimmer */
+#minute{
+  width:44%;
+  height:4px;
+}
+#centerPin{
+  width:12px;
+  height:12px;
+  background:#5a3e1b;
+  border-radius:50%;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOCK SCREEN -->
+<div id="lockScreen" style="height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;">
+  <p style="font-size:1.3rem;">Enter the password ❤️</p>
+  <input type="password" id="passwordInput" placeholder="••••••"
+         style="padding:10px;border-radius:10px;border:none;font-size:1.2rem;">
+  <br><br>
+  <button onclick="unlock()">Unlock ❤️</button>
+  <p id="lockError"></p>
+</div>
+
+<!-- MAIN SITE -->
+<div id="mainSite" class="hidden">
+  <h1>Our Valentine Week 💖</h1>
+  <p id="countdown" onclick="tapCountdown()"></p>
+
+  <div class="container">
+    <div class="card">
+      <h2 id="dayTitle"></h2>
+      <p id="dayText"></p>
+      <img id="dayImage">
+      <button onclick="specialAction()">Tap 💕</button>
+      <p id="extraText" class="hidden"></p>
+
+      <div id="voiceBox" class="hidden">
+        <h3>🎧 A message from me</h3>
+        <audio id="voicePlayer" controls></audio>
+      </div>
+    </div>
+
+    <!-- SECRET CLOCK -->
+    <div id="clockBox" class="hidden">
+      <h2>🕰️ Time Machine</h2>
+      <div id="clock" onclick="goNextDay()">
+        <div class="clock-number xii">XII</div>
+        <div class="clock-number iii">III</div>
+        <div class="clock-number vi">VI</div>
+        <div class="clock-number ix">IX</div>
+
+        <div id="hour" class="hand"></div>
+        <div id="minute" class="hand"></div>
+        <div id="centerPin"></div>
+      </div>
+      <p>Tap the clock to jump to tomorrow 9 AM</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const HER_NAME="Chutki";
+const YOUR_NAME="Abir";
+const PASSWORD="150525";
+
+let fakeOffset=0;
+let clockOverride=false;   // ✅ FIX 1: declared (auto-reset on refresh)
+let wrongAttempts=0;
+
+const days={
+  7:{title:"🌹 Rose Day",text:`If I could give you one rose every time I thought about you, the whole world would be a garden, ${HER_NAME}.`,image:"images/rose.jpg",extra:"This rose is a symbol of how beautiful you make my life."},
+  8:{title:"💍 Propose Day",text:`${HER_NAME}, will you be mine today and always?`,image:"images/propose.jpg",extra:"I already chose you ❤️"},
+  9:{title:"🍫 Chocolate Day",text:"You're sweeter than any chocolate.",image:"images/chocolate.jpg",extra:"And more addictive too."},
+  10:{title:"🧸 Teddy Day",text:"This teddy is a demo. The real one wants to hug you forever.",image:"images/teddy.jpg",extra:"I'm always with you."},
+  11:{title:"🤞 Promise Day",text:"I promise to choose you every day.",image:"images/promise.jpg",extra:"Forever means forever."},
+  12:{title:"🤗 Hug Day",text:"Sending you the tightest hug.",image:"images/hug.jpg",extra:"Feel it?"},
+  13:{title:"💋 Kiss Day",text:"Just one kiss? I want infinite.",image:"images/kiss.jpg",extra:"Save them for me 😘"},
+  14:{title:"❤️ Valentine's Day",text:`${HER_NAME}, you're my favorite person, my safe place, my love. This website exists only because you exist in my life.`,image:"images/valentine.jpg",extra:`Happy Valentine's Day ❤️ I love you more than words, more than code, more than anything. Forever yours, ${YOUR_NAME}`}
+};
+
+function checkValentineRedirect(){
+  const today = getToday();
+  const realDay = new Date().getDate();
+
+  // Only redirect when Valentine Day is ACTUALLY unlocked
+  if(today === 14 && realDay >= 14){
+    window.location.href = "Val26/index.html";
+  }
+}
+
+function unlock(){
+  const input=passwordInput.value.trim();
+  if(input===PASSWORD){
+    lockScreen.style.display="none";
+    mainSite.classList.remove("hidden");
+    loadDay(); startCountdown(); loadVoice();
+    return;
+  }
+  passwordInput.classList.add("shake");
+  setTimeout(()=>passwordInput.classList.remove("shake"),400);
+  passwordInput.value=""; passwordInput.focus(); wrongAttempts++;
+
+  if(input==="1552025"||input==="15525"){
+    lockError.innerText="Its in DD/MM/YY format idiot"; return;
+  }
+  lockError.innerText="Bhul Password Idiot";
+  if(wrongAttempts===1){
+    setTimeout(()=>lockError.innerText="Hint: its our Anniversary dum dum",900);
+  }
+}
+
+function getToday(){
+  const now=new Date();
+  let day=now.getDate();
+  if(now.getHours()<9) day--;
+  return clockOverride ? day+fakeOffset : day;
+}
+
+function loadDay(){
+  // STEP 4: check Valentine’s Day redirect FIRST
+  checkValentineRedirect();
+
+  const t = getToday();
+  const real = new Date().getDate();
+
+  if(t > real && !clockOverride){
+    dayTitle.innerText = "⏳ Not Yet";
+    dayText.innerText = "Good things take time. Come back at 9 AM ❤️";
+    dayImage.src = "";
+    voiceBox.classList.add("hidden");
+    extraText.classList.add("hidden");
+    return;
+  }
+
+  const d = days[t];
+  if(!d){
+    dayTitle.innerText = "⏳ Coming Soon";
+    dayText.innerText = "Valentine Week starts Feb 7";
+    return;
+  }
+
+  dayTitle.innerText = d.title;
+  dayText.innerText = d.text;
+  dayImage.src = d.image;
+  extraText.innerText = d.extra;
+}
+
+function specialAction(){extraText.classList.remove("hidden");}
+
+function loadVoice(){
+  const t=getToday(), real=new Date().getDate();
+  if(t>real&&!clockOverride){voiceBox.classList.add("hidden");return;}
+  const map={7:"v1.mp3",8:"v2.mp3",9:"v3.mp3",10:"v4.mp3",11:"v5.mp3",12:"v6.mp3",13:"v7.mp3",14:"v8.mp3"};
+  if(map[t]){voiceBox.classList.remove("hidden");voicePlayer.src=`voices/${map[t]}`;voicePlayer.load();}
+}
+
+function startCountdown(){
+  const target=new Date(`February 14, ${new Date().getFullYear()} 00:00:00`).getTime();
+  setInterval(()=>{
+    const d=target-new Date().getTime();
+    if(d<0){countdown.innerText="It's Valentine’s Day ❤️";return;}
+    countdown.innerText=`Valentine in ${Math.floor(d/86400000)}d ${Math.floor(d/3600000)%24}h ${Math.floor(d/60000)%60}m ${Math.floor(d/1000)%60}s`;
+  },1000);
+}
+
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart"; h.innerText="❤️";
+  h.style.left=Math.random()*100+"vw"; h.style.fontSize=(Math.random()*20+15)+"px";
+  document.body.appendChild(h); setTimeout(()=>h.remove(),6000);
+},500);
+
+let tapCount=0,tapTimer=null;
+function tapCountdown(){
+  tapCount++;
+  if(tapCount===3){clockBox.classList.remove("hidden");tapCount=0;}
+  clearTimeout(tapTimer); tapTimer=setTimeout(()=>tapCount=0,600);
+}
+
+function goNextDay(){
+  clockOverride=true; fakeOffset++; animateClock(); loadDay(); loadVoice();
+}
+
+function animateClock(){
+  // reset hands completely
+  hour.style.transition = "none";
+  minute.style.transition = "none";
+  hour.style.transform = "rotate(0deg)";
+  minute.style.transform = "rotate(0deg)";
+
+  // force browser reflow (guarantees animation every click)
+  hour.offsetHeight;
+
+  // animate smoothly to 9:00 AM
+  hour.style.transition = "transform 1.2s cubic-bezier(0.4, 0, 0.2, 1)";
+  minute.style.transition = "transform 1.2s cubic-bezier(0.4, 0, 0.2, 1)";
+
+  // FINAL POSITION → 9:00 AM
+  hour.style.transform = "rotate(270deg)";
+  minute.style.transform = "rotate(0deg)";
+}
+
+</script>
+</body>
+</html>
