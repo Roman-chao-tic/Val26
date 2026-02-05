@@ -185,10 +185,9 @@ const days={
 
 function checkValentineRedirect(){
   const today = getToday();
-  const realDay = new Date().getDate();
 
-  // Only redirect when Valentine Day is ACTUALLY unlocked
-  if(today === 14 && realDay >= 14){
+  // Redirect as soon as Valentine Day is reached
+  if(today === 14){
     window.location.href = "valentine/index.html";
   }
 }
