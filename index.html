@@ -214,32 +214,29 @@ function unlock(){
 }
 
 function getToday(){
-  const now=new Date();
-  let day=now.getDate();
-  if(now.getHours()<9) day--;
-  return clockOverride ? day+fakeOffset : day;
+  const now = new Date();
+  let day = now.getDate();
+  const hour = now.getHours();
+
+  // From 12 AM to 8:59 AM → show previous day
+  if(hour < 9){
+    day--;
+  }
+  return clockOverride ? day + fakeOffset : day;
 }
 
 function loadDay(){
-  // STEP 4: check Valentine’s Day redirect FIRST
   checkValentineRedirect();
 
   const t = getToday();
-  const real = new Date().getDate();
+  const d = days[t];
 
-  if(t > real && !clockOverride){
+  if(!d){
     dayTitle.innerText = "⏳ Not Yet";
-    dayText.innerText = "Good things take time. Come back at 9 AM ❤️";
+    dayText.innerText = "Come back at 9 AM ❤️";
     dayImage.src = "";
     voiceBox.classList.add("hidden");
     extraText.classList.add("hidden");
-    return;
-  }
-
-  const d = days[t];
-  if(!d){
-    dayTitle.innerText = "⏳ Coming Soon";
-    dayText.innerText = "Valentine Week starts Feb 7";
     return;
   }
 
@@ -250,7 +247,6 @@ function loadDay(){
 }
 
 function specialAction(){extraText.classList.remove("hidden");}
-
 function loadVoice(){
   const t=getToday(), real=new Date().getDate();
   if(t>real&&!clockOverride){voiceBox.classList.add("hidden");return;}
