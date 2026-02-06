@@ -31,6 +31,7 @@ h1{font-family:'Great Vibes',cursive;font-size:3.5rem;}
 .hidden{display:none;}
 .container{max-width:700px;margin:auto;padding:20px;}
 .card{
+  text-align: center;
   background:rgba(255,255,255,0.15);
   backdrop-filter:blur(10px);
   border-radius:20px;
@@ -38,7 +39,14 @@ h1{font-family:'Great Vibes',cursive;font-size:3.5rem;}
   margin-top:20px;
   animation:fadeIn 1.2s;
 }
-img{max-width:100%;border-radius:15px;margin-top:15px;}
+img {
+  display: block;
+  margin: 20px auto;
+  max-width: 100%;
+  max-height: 380px;
+  object-fit: contain;
+  border-radius: 15px;
+}
 button{
   padding:12px 25px;
   border:none;
@@ -137,12 +145,7 @@ button{
       <h2 id="dayTitle"></h2>
       <p id="dayText"></p>
       <img id="dayImage">
-
-      <!-- Tap button belongs HERE -->
-      <button id="tapBtn" onclick="specialAction()">Tap 💕</button>
-
       <p id="extraText" class="hidden"></p>
-
       <div id="voiceBox" class="hidden">
         <h3>🎧 A message from me</h3>
         <audio id="voicePlayer" controls></audio>
@@ -178,7 +181,7 @@ let wrongAttempts=0;
 
 const days={
   7:{title:"🌹 Rose Day",text:`If I could give you one rose every time I thought about you, the whole world would be a garden, ${HER_NAME}.`,image:"images/rose.png",extra:"This rose is a symbol of how beautiful you make my life."},
-  8:{title:"💍 Propose Day",text:`${HER_NAME}, will you be mine today and always?`,image:"images/propose.jpeg",extra:"I already chose you ❤️"},
+  8:{title:"💍 Propose Day",text:`${HER_NAME}, will you be mine today and always?`,image:"images/propose.jpg",extra:"I already chose you ❤️"},
   9:{title:"🍫 Chocolate Day",text:"You're sweeter than any chocolate.",image:"images/chocolate.gif",extra:"And more addictive too."},
   10:{title:"🧸 Teddy Day",text:"This teddy is a demo. The real one wants to hug you forever.",image:"images/teddy.jpeg",extra:"I'm always with you."},
   11:{title:"🤞 Promise Day",text:"I promise to choose you every day.",image:"images/promise.jpeg",extra:"Forever means forever."},
@@ -240,7 +243,6 @@ function loadDay(){
     dayImage.src = "";
     voiceBox.classList.add("hidden");
     extraText.classList.add("hidden");
-    tapBtn.classList.add("hidden");
     return;
   }
 
@@ -248,10 +250,8 @@ function loadDay(){
   dayText.innerText = d.text;
   dayImage.src = d.image;
   extraText.innerText = d.extra;
-  tapBtn.classList.remove("hidden");  // 👈 show button again
+  extraText.classList.remove("hidden");
 }
-
-function specialAction(){extraText.classList.remove("hidden");}
 function loadVoice(){
   const t=getToday(), real=new Date().getDate();
   if(t>real&&!clockOverride){voiceBox.classList.add("hidden");return;}
