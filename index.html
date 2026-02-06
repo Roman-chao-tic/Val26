@@ -137,7 +137,10 @@ button{
       <h2 id="dayTitle"></h2>
       <p id="dayText"></p>
       <img id="dayImage">
-      <button onclick="specialAction()">Tap 💕</button>
+
+      <!-- Tap button belongs HERE -->
+      <button id="tapBtn" onclick="specialAction()">Tap 💕</button>
+
       <p id="extraText" class="hidden"></p>
 
       <div id="voiceBox" class="hidden">
@@ -175,22 +178,20 @@ let wrongAttempts=0;
 
 const days={
   7:{title:"🌹 Rose Day",text:`If I could give you one rose every time I thought about you, the whole world would be a garden, ${HER_NAME}.`,image:"images/rose.jpg",extra:"This rose is a symbol of how beautiful you make my life."},
-  8:{title:"💍 Propose Day",text:`${HER_NAME}, will you be mine today and always?`,image:"images/propose.jpg",extra:"I already chose you ❤️"},
+  8:{title:"💍 Propose Day",text:`${HER_NAME}, will you be mine today and always?`,image:"images/propose.gif",extra:"I already chose you ❤️"},
   9:{title:"🍫 Chocolate Day",text:"You're sweeter than any chocolate.",image:"images/chocolate.jpg",extra:"And more addictive too."},
   10:{title:"🧸 Teddy Day",text:"This teddy is a demo. The real one wants to hug you forever.",image:"images/teddy.jpg",extra:"I'm always with you."},
   11:{title:"🤞 Promise Day",text:"I promise to choose you every day.",image:"images/promise.jpg",extra:"Forever means forever."},
   12:{title:"🤗 Hug Day",text:"Sending you the tightest hug.",image:"images/hug.jpg",extra:"Feel it?"},
   13:{title:"💋 Kiss Day",text:"Just one kiss? I want infinite.",image:"images/kiss.jpg",extra:"Save them for me 😘"},
-  14:{title:"❤️ Valentine's Day",text:`${HER_NAME}, you're my favorite person, my safe place, my love. This website exists only because you exist in my life.`,image:"images/valentine.jpg",extra:`Happy Valentine's Day ❤️ I love you more than words, more than code, more than anything. Forever yours, ${YOUR_NAME}`}
 };
 
 function checkValentineRedirect(){
   const today = getToday();
-  const realDay = new Date().getDate();
 
-  // Only redirect when Valentine Day is ACTUALLY unlocked
-  if(today === 14 && realDay >= 14){
-    window.location.href = "Val26/index.html";
+  // Redirect as soon as Valentine Day is reached
+  if(today === 14){
+    window.location.href = "valentine/index.html";
   }
 }
 
@@ -216,32 +217,30 @@ function unlock(){
 }
 
 function getToday(){
-  const now=new Date();
-  let day=now.getDate();
-  if(now.getHours()<9) day--;
-  return clockOverride ? day+fakeOffset : day;
+  const now = new Date();
+  let day = now.getDate();
+  const hour = now.getHours();
+
+  // From 12 AM to 8:59 AM → show previous day
+  if(hour < 9){
+    day--;
+  }
+  return clockOverride ? day + fakeOffset : day;
 }
 
 function loadDay(){
-  // STEP 4: check Valentine’s Day redirect FIRST
   checkValentineRedirect();
 
   const t = getToday();
-  const real = new Date().getDate();
+  const d = days[t];
 
-  if(t > real && !clockOverride){
-    dayTitle.innerText = "⏳ Not Yet";
-    dayText.innerText = "Good things take time. Come back at 9 AM ❤️";
+  if(!d){
+    dayTitle.innerText = "⏳ Not Yet💔";
+    dayText.innerText = "9 tay ferot aye sona";
     dayImage.src = "";
     voiceBox.classList.add("hidden");
     extraText.classList.add("hidden");
-    return;
-  }
-
-  const d = days[t];
-  if(!d){
-    dayTitle.innerText = "⏳ Coming Soon";
-    dayText.innerText = "Valentine Week starts Feb 7";
+    tapBtn.classList.add("hidden");
     return;
   }
 
@@ -249,10 +248,10 @@ function loadDay(){
   dayText.innerText = d.text;
   dayImage.src = d.image;
   extraText.innerText = d.extra;
+  tapBtn.classList.remove("hidden");  // 👈 show button again
 }
 
 function specialAction(){extraText.classList.remove("hidden");}
-
 function loadVoice(){
   const t=getToday(), real=new Date().getDate();
   if(t>real&&!clockOverride){voiceBox.classList.add("hidden");return;}
