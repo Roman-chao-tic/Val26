@@ -177,13 +177,13 @@ let clockOverride=false;   // ✅ FIX 1: declared (auto-reset on refresh)
 let wrongAttempts=0;
 
 const days={
-  7:{title:"🌹 Rose Day",text:`If I could give you one rose every time I thought about you, the whole world would be a garden, ${HER_NAME}.`,image:"images/rose.jpg",extra:"This rose is a symbol of how beautiful you make my life."},
+  7:{title:"🌹 Rose Day",text:`If I could give you one rose every time I thought about you, the whole world would be a garden, ${HER_NAME}.`,image:"images/rose.png",extra:"This rose is a symbol of how beautiful you make my life."},
   8:{title:"💍 Propose Day",text:`${HER_NAME}, will you be mine today and always?`,image:"images/propose.gif",extra:"I already chose you ❤️"},
-  9:{title:"🍫 Chocolate Day",text:"You're sweeter than any chocolate.",image:"images/chocolate.jpg",extra:"And more addictive too."},
-  10:{title:"🧸 Teddy Day",text:"This teddy is a demo. The real one wants to hug you forever.",image:"images/teddy.jpg",extra:"I'm always with you."},
-  11:{title:"🤞 Promise Day",text:"I promise to choose you every day.",image:"images/promise.jpg",extra:"Forever means forever."},
-  12:{title:"🤗 Hug Day",text:"Sending you the tightest hug.",image:"images/hug.jpg",extra:"Feel it?"},
-  13:{title:"💋 Kiss Day",text:"Just one kiss? I want infinite.",image:"images/kiss.jpg",extra:"Save them for me 😘"},
+  9:{title:"🍫 Chocolate Day",text:"You're sweeter than any chocolate.",image:"images/chocolate.jpeg",extra:"And more addictive too."},
+  10:{title:"🧸 Teddy Day",text:"This teddy is a demo. The real one wants to hug you forever.",image:"images/teddy.jpeg",extra:"I'm always with you."},
+  11:{title:"🤞 Promise Day",text:"I promise to choose you every day.",image:"images/promise.jpeg",extra:"Forever means forever."},
+  12:{title:"🤗 Hug Day",text:"Sending you the tightest hug.",image:"images/hug.jpeg",extra:"Feel it?"},
+  13:{title:"💋 Kiss Day",text:"Just one kiss? I want infinite.",image:"images/kiss.jpeg",extra:"Save them for me 😘"},
 };
 
 function checkValentineRedirect(){
@@ -255,7 +255,16 @@ function specialAction(){extraText.classList.remove("hidden");}
 function loadVoice(){
   const t=getToday(), real=new Date().getDate();
   if(t>real&&!clockOverride){voiceBox.classList.add("hidden");return;}
-  const map={7:"v1.mp3",8:"v2.mp3",9:"v3.mp3",10:"v4.mp3",11:"v5.mp3",12:"v6.mp3",13:"v7.mp3",14:"v8.mp3"};
+const map={
+  7:"v1.m4a",
+  8:"v2.m4a",
+  9:"v3.m4a",
+  10:"v4.m4a",
+  11:"v5.m4a",
+  12:"v6.m4a",
+  13:"v7.m4a",
+  14:"v8.m4a"
+};
   if(map[t]){voiceBox.classList.remove("hidden");voicePlayer.src=`voices/${map[t]}`;voicePlayer.load();}
 }
 
