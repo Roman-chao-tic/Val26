@@ -27,9 +27,14 @@ body {
 .heart-glow {
     font-size: 4rem;
     margin-bottom: 20px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
     animation: goldenPulse 2s infinite ease-in-out;
 }
 
+.heart-glow:hover {
+    transform: scale(1.2);
+}
 /* GIF */
 .gif_container img {
     max-width: 500px;
