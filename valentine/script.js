@@ -28,27 +28,18 @@ function handleNoClick() {
 
 function handleYesClick() {
 
-    // Hide Yes / No buttons
-    const buttonContainer = document.getElementById("buttonContainer");
-    buttonContainer.style.display = "none";
+    // Hide Yes/No buttons
+    document.getElementById("buttonContainer").style.display = "none";
 
-    // Change heading text
-    const heading = document.getElementById("mainHeading");
-    heading.innerText = "You just made me the happiest person ❤️";
+    // Change heading
+    document.getElementById("mainHeading").innerText =
+        "You just made me the happiest person ❤️";
 
-    // Reveal playlist button with glow
-    const btn = document.getElementById("playlistBtn");
-    btn.classList.remove("hidden");
+    // Show glowing heart
+    const heart = document.getElementById("heartGlow");
+    heart.classList.remove("hidden");
 
-    // Trigger glow animation smoothly
     setTimeout(() => {
-        btn.classList.add("playlist-visible");
+        heart.classList.add("heart-visible");
     }, 100);
-}
-
-function openPlaylist(){
-    window.open(
-        "https://open.spotify.com/playlist/4rYSFLBQpDG7Eh5m7aqaXT?si=6LEqCEN7TYSq9eYa-f2X7Q",
-        "_blank"
-    );
 }
