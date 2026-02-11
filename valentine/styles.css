@@ -1,3 +1,4 @@
+/* Base Layout */
 body {
     display: flex;
     justify-content: center;
@@ -7,97 +8,102 @@ body {
     background-color: #f9e3e3;
     font-family: 'Arial', sans-serif;
     flex-direction: column;
-  }
-  
-  .container {
+}
+
+.container {
     text-align: center;
-  }
-  
-  h1 {
+}
+
+/* Heading */
+h1 {
     font-size: 2.5em;
     color: #d32f2f;
-  }
-  
-  .buttons {
+    transition: 0.4s ease;
+}
+
+/* Button Container */
+.buttons {
     margin-top: 20px;
-  }
-  
-  .yes-button {
+}
+
+/* Yes Button */
+.yes-button {
     font-size: 1.5em;
     padding: 10px 20px;
     margin-right: 10px;
     background-color: #4caf50;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-  }
-  
-  .no-button {
+    transition: 0.3s ease;
+}
+
+.yes-button:hover {
+    transform: scale(1.1);
+}
+
+/* No Button */
+.no-button {
     font-size: 1.5em;
     padding: 10px 20px;
     background-color: #f44336;
     color: white;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .gif_container img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-    margin-top: 20px;
-  }
-.playlist-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 25px;
-    background-color: #1DB954; /* Spotify green */
-    color: white;
-    font-size: 1rem;
+    border-radius: 8px;
     cursor: pointer;
     transition: 0.3s ease;
 }
 
-.playlist-button:hover {
+.no-button:hover {
     transform: scale(1.05);
-    background-color: #17a74a;
 }
+
+/* GIF */
+.gif_container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin-top: 25px;
+}
+
+/* Hidden utility */
 .hidden {
     display: none;
 }
 
+/* Playlist Button */
 .playlist-button {
-    margin-top: 20px;
-    padding: 12px 24px;
+    margin-top: 30px;
+    padding: 14px 28px;
     border: none;
-    border-radius: 30px;
+    border-radius: 35px;
     background-color: #1DB954;
     color: white;
-    font-size: 1rem;
+    font-size: 1.1rem;
     cursor: pointer;
+    transform: scale(0.9);
     opacity: 0;
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    transition: all 0.6s ease;
 }
 
-/* Glow animation */
-@keyframes glowPulse {
-    0% {
-        box-shadow: 0 0 5px #1DB954;
-    }
-    50% {
-        box-shadow: 0 0 20px #1DB954, 0 0 40px #1DB954;
-    }
-    100% {
-        box-shadow: 0 0 5px #1DB954;
-    }
-}
-
+/* Visible state after Yes */
 .playlist-visible {
     display: inline-block;
     opacity: 1;
     transform: scale(1.05);
     animation: glowPulse 2s infinite;
+}
+
+/* Glow Animation */
+@keyframes glowPulse {
+    0% {
+        box-shadow: 0 0 5px #1DB954;
+    }
+    50% {
+        box-shadow: 0 0 30px #1DB954, 0 0 60px #1DB954;
+    }
+    100% {
+        box-shadow: 0 0 5px #1DB954;
+    }
 }
