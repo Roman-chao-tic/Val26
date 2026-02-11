@@ -49,3 +49,55 @@ body {
     border-radius: 10px;
     margin-top: 20px;
   }
+.playlist-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    background-color: #1DB954; /* Spotify green */
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.playlist-button:hover {
+    transform: scale(1.05);
+    background-color: #17a74a;
+}
+.hidden {
+    display: none;
+}
+
+.playlist-button {
+    margin-top: 20px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 30px;
+    background-color: #1DB954;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Glow animation */
+@keyframes glowPulse {
+    0% {
+        box-shadow: 0 0 5px #1DB954;
+    }
+    50% {
+        box-shadow: 0 0 20px #1DB954, 0 0 40px #1DB954;
+    }
+    100% {
+        box-shadow: 0 0 5px #1DB954;
+    }
+}
+
+.playlist-visible {
+    display: inline-block;
+    opacity: 1;
+    transform: scale(1.05);
+    animation: glowPulse 2s infinite;
+}
