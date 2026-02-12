@@ -10,9 +10,7 @@ const messages = [
     "Ok fine, I will stop asking...",
     "Just kidding, say yes please! ❤️"
 ];
-
 let messageIndex = 0;
-
 function handleNoClick() {
     const noButton = document.querySelector('.no-button');
     const yesButton = document.querySelector('.yes-button');
@@ -26,20 +24,6 @@ function handleNoClick() {
     yesButton.style.fontSize = `${currentSize * 1.3}px`;
 }
 
-function handleYesClick() {
-
-    // Hide Yes/No buttons
-    document.getElementById("buttonContainer").style.display = "none";
-
-    // Change heading
-    document.getElementById("mainHeading").innerText =
-        "You just made me the happiest person ❤️";
-
-    // Show glowing heart
-    const heart = document.getElementById("heartGlow");
-    heart.classList.remove("hidden");
-
-    setTimeout(() => {
-        heart.classList.add("heart-visible");
-    }, 100);
+function handleYesClick(){
+    window.location.href = "yes_page.html";
 }
