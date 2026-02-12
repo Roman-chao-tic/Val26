@@ -6,7 +6,7 @@ body {
     align-items: center;
     background: radial-gradient(circle at center, #fff0f0, #f9e3e3);
     font-family: Arial, sans-serif;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 .container {
@@ -16,7 +16,15 @@ body {
 .header_text {
     font-size: 2.8em;
     color: #d32f2f;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+}
+
+/* GIF */
+.gif_container img {
+    width: 100%;
+    max-width: 450px;
+    border-radius: 12px;
+    margin-bottom: 25px;
 }
 
 /* HEART */
@@ -24,18 +32,17 @@ body {
     font-size: 5rem;
     cursor: pointer;
     animation: goldenPulse 2s infinite ease-in-out;
-    transition: transform 0.5s ease;
+    transition: transform 0.8s ease;
 }
 
 .expand {
     transform: scale(4);
     opacity: 0;
-    transition: all 0.8s ease;
 }
 
 @keyframes goldenPulse {
     0% { text-shadow: 0 0 10px #ffd700; }
-    50% { text-shadow: 0 0 40px #ffd700, 0 0 80px #ffcc00; }
+    50% { text-shadow: 0 0 50px #ffd700, 0 0 100px #ffcc00; }
     100% { text-shadow: 0 0 10px #ffd700; }
 }
 
@@ -58,7 +65,7 @@ body {
 
 /* REVEAL */
 .reveal {
-    margin-top: 40px;
+    margin-top: 30px;
     opacity: 0;
     transform: translateY(20px);
     transition: all 1s ease;
@@ -75,26 +82,22 @@ body {
 
 .reveal h2 {
     color: #b71c1c;
-    margin-bottom: 5px;
 }
 
 .sub {
     font-size: 0.9em;
     color: #555;
+    margin-bottom: 15px;
 }
 
-.arrow {
-    font-size: 3rem;
-    margin: 10px 0;
-    color: #ff9800;
-    animation: arrowBounce 1s infinite alternate;
+/* Curvy arrow */
+.arrow-img {
+    width: 180px;
+    margin: 10px auto;
+    display: block;
 }
 
-@keyframes arrowBounce {
-    from { transform: translateY(0); }
-    to { transform: translateY(10px); }
-}
-
+/* Spotify code image */
 .secret-img {
     max-width: 250px;
     border-radius: 15px;
